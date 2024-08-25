@@ -33,7 +33,7 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-resource "aws_route_table" "public-route-table" {
+resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.main.id
 
   route {
@@ -48,9 +48,9 @@ resource "aws_route_table" "public-route-table" {
   }
 }
 
-resource "aws_route_table_association" "public-rt-association" {
+resource "aws_route_table_association" "public_rt_association" {
   subnet_id      = aws_subnet.public_subnet.id
-  route_table_id = aws_route_table.public-route-table.id
+  route_table_id = aws_route_table.public_route_table.id
 }
 
 //private subnet
@@ -65,7 +65,7 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
-resource "aws_route_table" "private-route-table" {
+resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.main.id
 
   tags = {
@@ -75,9 +75,9 @@ resource "aws_route_table" "private-route-table" {
   }
 }
 
-resource "aws_route_table_association" "private-rt-association" {
+resource "aws_route_table_association" "private_rt_association" {
   subnet_id      = aws_subnet.private_subnet.id
-  route_table_id = aws_route_table.private-route-table.id
+  route_table_id = aws_route_table.private_route_table.id
 }
 
 //database subnet
@@ -92,7 +92,7 @@ resource "aws_subnet" "database_subnet" {
   }
 }
 
-resource "aws_route_table" "database-route-table" {
+resource "aws_route_table" "database_route_table" {
   vpc_id = aws_vpc.main.id
 
   tags = {
@@ -102,7 +102,18 @@ resource "aws_route_table" "database-route-table" {
   }
 }
 
-resource "aws_route_table_association" "database-rt-association" {
+resource "aws_route_table_association" "database_rt_association" {
   subnet_id      = aws_subnet.database_subnet.id
-  route_table_id = aws_route_table.database-route-table.id
+  route_table_id = aws_route_table.database_route_table.id
+}
+
+//elastic ip
+resource "aws_eip" "nat" {
+  domain   = "vpc"
+}
+
+//nat gateway
+resource "aws_nat_gateway" "gw" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public_subnet.id
 }
