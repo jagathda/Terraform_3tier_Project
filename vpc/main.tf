@@ -79,30 +79,3 @@ resource "aws_route_table_association" "private-rt-association" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private-route-table.id
 }
-
-//database subnet
-resource "aws_subnet" "database_subnet" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.3.0/24"
-
-  tags = {
-    Name = "test-database-subnet"
-    Terraform = "true"
-    Environment = "dev"
-  }
-}
-
-resource "aws_route_table" "database-route-table" {
-  vpc_id = aws_vpc.main.id
-
-  tags = {
-    Name = "test-database-route-table"
-    Terraform = "true"
-    Environment = "dev"
-  }
-}
-
-resource "aws_route_table_association" "database-rt-association" {
-  subnet_id      = aws_subnet.database_subnet.id
-  route_table_id = aws_route_table.database-route-table.id
-}
