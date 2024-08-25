@@ -107,6 +107,7 @@ resource "aws_route_table_association" "database_rt_association" {
   route_table_id = aws_route_table.database_route_table.id
 }
 
+/*
 //elastic ip
 resource "aws_eip" "nat" {
   domain   = "vpc"
@@ -131,4 +132,4 @@ resource "aws_route" "database_route" {
   destination_cidr_block    = "0.0.0.0./0"
   nat_gateway_id =  aws_nat_gateway.gw.id
 }
-
+*/
