@@ -169,5 +169,8 @@ resource "aws_instance" "web" {
   count = 3
   ami           = "ami-090abff6ae1141d7d"
   instance_type = "t3.micro"
+  tags = {
+    Name = var.instance_names[count.index]
+  }
 }
 
