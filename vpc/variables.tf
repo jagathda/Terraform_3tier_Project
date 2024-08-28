@@ -32,3 +32,13 @@ variable "tags" {
     Environment = "dev"
   }
 }
+
+variable "postgressql_port" {
+    type = number
+    default = 5432
+}
+
+variable "cidr_list" {
+  type = list
+  default =  ["10.0.1.0/24", "10.0.2.0/24"]
+}
