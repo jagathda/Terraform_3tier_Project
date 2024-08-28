@@ -45,5 +45,17 @@ variable "cidr_list" {
 
 variable "instance_names" {
     type = list  
-    default = ["web", "api", "db"]
+    default = ["web-server", "api-server", "db-server"]
+}
+
+/*
+variable "isProd" {
+  type = bool
+  default = true
+}
+*/
+
+variable "env" {
+  type = string
+  default = "PROD"
 }

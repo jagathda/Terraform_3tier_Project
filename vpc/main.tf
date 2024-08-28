@@ -165,7 +165,7 @@ resource "aws_security_group" "allow_protgressql" {
 
 #EC2 instance will create inside default VPC
 #AMI id are diffrent in different regions
-resource "aws_instance" "web" {
+resource "aws_instance" "ec2" {
   count = 3
   ami           = "ami-090abff6ae1141d7d"
   instance_type = "t3.micro"
@@ -174,3 +174,14 @@ resource "aws_instance" "web" {
   }
 }
 
+/*
+resource "aws_instance" "condition" {
+  ami           = "ami-090abff6ae1141d7d"
+  instance_type = var.isProd ? "t3.micro" : "t2.micro"
+}
+*/
+
+resource "aws_instance" "condition" {
+  ami           = "ami-090abff6ae1141d7d"
+  instance_type = var.env == "PROD" ? "t3.micro" : "t2.micro"
+}
