@@ -11,16 +11,12 @@ resource "aws_internet_gateway" "main" {
 
 //vpc
 resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  instance_tenancy     = "default"
-  enable_dns_support   = true
-  enable_dns_hostnames = true
+  cidr_block           = var.cidr_block
+  instance_tenancy     = var.instance_tenancy
+  enable_dns_support   = var.dns_support
+  enable_dns_hostnames = var.dns_hostnames
 
-  tags = {
-    Name        = "${var.project_name}-vpc"
-    Terraform   = "true"
-    Environment = "dev"
-  }
+  tags = var.tags
 }
 
 //public subnet
