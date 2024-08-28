@@ -137,3 +137,28 @@ resource "aws_route" "database_route" {
   nat_gateway_id =  aws_nat_gateway.gw.id
 }
 */
+//##################################################################
+//Security group for postgressql RDS, 5432
+resource "aws_security_group" "allow_protgressql" {
+  name        = "allow_postgressql"
+  description = "Allow postgressql inbound traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "TLS from VPC"
+    from_port        = var.postgressql_port
+    to_port          = var.postgressql_port
+    protocol         = "tcp"
+    cidr_blocks      = var.cidr_list
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = var.tags
+}
