@@ -1,22 +1,24 @@
+//internet gateway
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "test-igw"
-    Terraform = "true"
+    Name        = "${var.project_name}-igw"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
+//vpc
 resource "aws_vpc" "main" {
-  cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "default"
-  enable_dns_support = true
+  cidr_block           = "10.0.0.0/16"
+  instance_tenancy     = "default"
+  enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = {
-    Name = "test-vpc"
-    Terraform = "true"
+    Name        = "${var.project_name}-vpc"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
@@ -27,12 +29,13 @@ resource "aws_subnet" "public_subnet" {
   cidr_block = "10.0.1.0/24"
 
   tags = {
-    Name = "test-public-subnet"
-    Terraform = "true"
+    Name        = "${var.project_name}-public-subnet"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
+//public route table
 resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.main.id
 
@@ -42,12 +45,13 @@ resource "aws_route_table" "public_route_table" {
   }
 
   tags = {
-    Name = "test-public-route-table"
-    Terraform = "true"
+    Name        = "${var.project_name}-public-route-table"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
+//public route table association
 resource "aws_route_table_association" "public_rt_association" {
   subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.public_route_table.id
@@ -59,22 +63,24 @@ resource "aws_subnet" "private_subnet" {
   cidr_block = "10.0.2.0/24"
 
   tags = {
-    Name = "test-private-subnet"
-    Terraform = "true"
+    Name        = "${var.project_name}-private-subnet"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
+//private route table
 resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "test-private-route-table"
-    Terraform = "true"
+    Name        = "${var.project_name}-private-route-table"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
+//private route table association
 resource "aws_route_table_association" "private_rt_association" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private_route_table.id
@@ -86,22 +92,24 @@ resource "aws_subnet" "database_subnet" {
   cidr_block = "10.0.3.0/24"
 
   tags = {
-    Name = "test-database-subnet"
-    Terraform = "true"
+    Name        = "${var.project_name}-database-subnet"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
+//database route table
 resource "aws_route_table" "database_route_table" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "test-database-route-table"
-    Terraform = "true"
+    Name        = "${var.project_name}-database-route-table"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
+//database route table association
 resource "aws_route_table_association" "database_rt_association" {
   subnet_id      = aws_subnet.database_subnet.id
   route_table_id = aws_route_table.database_route_table.id
