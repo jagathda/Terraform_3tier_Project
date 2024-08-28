@@ -146,10 +146,10 @@ resource "aws_security_group" "allow_protgressql" {
 
   ingress {
     description = "TLS from VPC"
-    from_port        = var.postgressql_port
-    to_port          = var.postgressql_port
-    protocol         = "tcp"
-    cidr_blocks      = var.cidr_list
+    from_port   = var.postgressql_port
+    to_port     = var.postgressql_port
+    protocol    = "tcp"
+    cidr_blocks = var.cidr_list
   }
 
   egress {
@@ -162,3 +162,12 @@ resource "aws_security_group" "allow_protgressql" {
 
   tags = var.tags
 }
+
+#EC2 instance will create inside default VPC
+#AMI id are diffrent in different regions
+resource "aws_instance" "web" {
+  count = 3
+  ami           = "ami-090abff6ae1141d7d"
+  instance_type = "t3.micro"
+}
+
