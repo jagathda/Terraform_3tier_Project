@@ -33,6 +33,26 @@ variable "tags" {
   }
 }
 
+variable "public_subnets" {
+  default = {
+      public-subnet-1 = {
+        Name = "public-subnet-1"
+        cidr_block = "10.0.10.0/24"
+        az = "eu-north-1a"
+    },
+      public-subnet-2 = {
+        Name = "public-subnet-2"
+        cidr_block = "10.0.20.0/24"
+        az = "eu-north-1b"
+    }
+      public-subnet-3 = {
+        Name = "public-subnet-3"
+        cidr_block = "10.0.30.0/24"
+        az = "eu-north-1c"
+    }
+  }
+}
+
 variable "postgressql_port" {
     type = number
     default = 5432

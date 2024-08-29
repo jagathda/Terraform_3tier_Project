@@ -138,6 +138,19 @@ resource "aws_route" "database_route" {
 }
 */
 //##################################################################
+
+resource "aws_subnet" "public" {
+  for_each = var.public_subnets
+  vpc_id = aws_vpc.main.id
+  cidr_block = each.value.cidr_block
+  availability_zone = each.value.az
+
+  tags = {
+    Name = each.value.Name
+  }
+}
+
+
 //Security group for postgressql RDS, 5432
 resource "aws_security_group" "allow_protgressql" {
   name        = "allow_postgressql"
