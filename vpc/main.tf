@@ -160,8 +160,12 @@ resource "aws_security_group" "allow_protgressql" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  tags = var.tags
-
+  tags = merge(
+    var.tags, 
+    {
+      Name : "test-rds-sg"
+    }
+  )
 }
 
 #EC2 instance will create inside default VPC
