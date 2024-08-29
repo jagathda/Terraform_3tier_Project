@@ -161,12 +161,13 @@ resource "aws_security_group" "allow_protgressql" {
   }
 
   tags = var.tags
+
 }
 
 #EC2 instance will create inside default VPC
 #AMI id are diffrent in different regions
 resource "aws_instance" "ec2" {
-  count = 3
+  count = 2
   ami           = "ami-090abff6ae1141d7d"
   instance_type = "t3.micro"
   tags = {
@@ -181,7 +182,13 @@ resource "aws_instance" "condition" {
 }
 */
 
+resource "aws_key_pair" "terraform" {
+  key_name   = "terraform"
+  public_key = file("C:\\Users\\user\\terraform.pub")
+}
+
 resource "aws_instance" "condition" {
+  key_name = aws_key_pair.terraform.key_name
   ami           = "ami-090abff6ae1141d7d"
   instance_type = var.env == "PROD" ? "t3.micro" : "t2.micro"
 }
